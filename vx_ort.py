@@ -88,18 +88,15 @@ def multiclass_nms(boxes, scores, nms_thr, score_thr):
         valid_score_mask = cls_scores > score_thr
         if valid_score_mask.sum() == 0:
             continue
-        else:
-            valid_scores = cls_scores[valid_score_mask]
-            valid_boxes = boxes[valid_score_mask]
-            keep = nms(valid_boxes, valid_scores, nms_thr)
-            if len(keep) > 0:
-                cls_inds = np.ones((len(keep), 1)) * cls_ind
-                dets = np.concatenate([valid_boxes[keep], valid_scores[keep, None], cls_inds], 1)
-                final_dets.append(dets)
+        valid_scores = cls_scores[valid_score_mask]
+        valid_boxes = boxes[valid_score_mask]
+        keep = nms(valid_boxes, valid_scores, nms_thr)
+        if len(keep) > 0:
+            cls_inds = np.ones((len(keep), 1)) * cls_ind
+            dets = np.concatenate([valid_boxes[keep], valid_scores[keep, None], cls_inds], 1)
+            final_dets.append(dets)
 
-    if len(final_dets) == 0:
-        return None
-    return np.concatenate(final_dets, 0)
+    return np.concatenate(final_dets, 0) if final_dets else None
 
 
 def preprocess(image, input_size, mean, std, swap=(2, 0, 1)):

@@ -25,7 +25,7 @@ def postprocess(frame, networkOutput, conf, threshold):
             confidence = scores[classID]
 
             if confidence > conf:
-                box = detection[0:4] * np.array([W, H, W, H])
+                box = detection[:4] * np.array([W, H, W, H])
                 (centerX, centerY, width, height) = box.astype("int")
                 x = int(centerX - (width / 2))
                 y = int(centerY - (height / 2))

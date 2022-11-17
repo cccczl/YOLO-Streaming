@@ -26,7 +26,7 @@ def drawPred(color, classId, conf, left, top, right, bottom, frame):
     # Get the label for the class name and its confidence
     if classes:
         assert (classId < len(classes))
-        label = '%s:%s' % (classes[classId], label)
+        label = f'{classes[classId]}:{label}'
 
     # Display the label at the top of the bounding box
     labelSize, baseLine = cv.getTextSize(label, cv.FONT_HERSHEY_SIMPLEX, 0.5, 1)

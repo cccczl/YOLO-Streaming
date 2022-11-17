@@ -75,7 +75,7 @@ class yolov5():
         color = [int(c) for c in COLORS[classId]]
         cv2.rectangle(frame, (left, top), (right, bottom), color, thickness=2)
         label = '%.2f' % conf
-        label = '%s:%s' % (classes[classId], label)
+        label = f'{classes[classId]}:{label}'
         # Display the label at the top of the bounding box
         labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
         top = max(top, labelSize[1])
@@ -105,8 +105,7 @@ class yolov5():
             y[..., 0:2] = (y[..., 0:2] * 2. - 0.5 + self.grid[i]) * int(self.stride[i])
             y[..., 2:4] = (y[..., 2:4] * 2) ** 2 * self.anchor_grid[i]  # wh
             z.append(y.reshape(bs, -1, self.no))
-        z = np.concatenate(z, axis=1)
-        return z
+        return np.concatenate(z, axis=1)
 
 if __name__ == "__main__":
     yolonet = yolov5()
